@@ -57,6 +57,8 @@ class MediaBlockService extends AbstractBlockService
      */
     private $container;
 
+    private $name;
+
     /**
      * NEXT_MAJOR: Remove `$templating` argument.
      *
@@ -94,7 +96,7 @@ class MediaBlockService extends AbstractBlockService
         return $this->mediaAdmin;
     }
 
-    public function configureSettings(OptionsResolver $resolver)
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'media' => false,
@@ -152,7 +154,7 @@ class MediaBlockService extends AbstractBlockService
         ]);
     }
 
-    public function execute(BlockContextInterface $blockContext, ?Response $response = null)
+    public function execute(BlockContextInterface $blockContext, ?Response $response = null): Response
     {
         // make sure we have a valid format
         $media = $blockContext->getBlock()->getSetting('mediaId');
@@ -171,7 +173,7 @@ class MediaBlockService extends AbstractBlockService
         ], $response);
     }
 
-    public function load(BlockInterface $block)
+    public function load(BlockInterface $block): void
     {
         $media = $block->getSetting('mediaId', null);
 
@@ -200,7 +202,7 @@ class MediaBlockService extends AbstractBlockService
      */
     public function getBlockMetadata($code = null)
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
+        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
     }
@@ -305,5 +307,10 @@ class MediaBlockService extends AbstractBlockService
             'model_manager' => $this->getMediaAdmin()->getModelManager(),
             'label' => 'form.label_media',
         ]);
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 }
