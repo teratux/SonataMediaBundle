@@ -92,7 +92,7 @@ class GalleryBlockService extends AbstractBlockService
         return $this->galleryAdmin;
     }
 
-    public function configureSettings(OptionsResolver $resolver)
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'gallery' => false,
@@ -197,7 +197,7 @@ class GalleryBlockService extends AbstractBlockService
         ]);
     }
 
-    public function execute(BlockContextInterface $blockContext, ?Response $response = null)
+    public function execute(BlockContextInterface $blockContext, ?Response $response = null): Response
     {
         $gallery = $blockContext->getBlock()->getSetting('galleryId');
 
@@ -209,7 +209,7 @@ class GalleryBlockService extends AbstractBlockService
         ], $response);
     }
 
-    public function load(BlockInterface $block)
+    public function load(BlockInterface $block): void
     {
         $gallery = $block->getSetting('galleryId');
 

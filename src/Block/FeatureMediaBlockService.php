@@ -29,7 +29,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FeatureMediaBlockService extends MediaBlockService
 {
-    public function configureSettings(OptionsResolver $resolver)
+    private $name;
+
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'media' => false,
@@ -100,8 +102,13 @@ class FeatureMediaBlockService extends MediaBlockService
 
     public function getBlockMetadata($code = null)
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
+        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 }
